@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  # db:
+    # image: postgres:13.2
+    # container_name: db
+    # restart: always
+    # environment:
+    #   POSTGRES_PASSWORD: password
+    #   POSTGRES_USER: user
+    #   POSTGRES_DB: db
+    # volumes:
+    #   - ./db:/var/lib/postgresql/data
+    # ports:
+    #   - 5432:5432
+  sysmon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image:  basebandit.jfrog.io/docker/sysmon:1.0.1
+    container_name: sysmon
+    ports:
+      - 80:5000
+    restart: always
+    networks:
+      - sysmon
+  
+networks:
+    sysmon:
+      driver: bridge
+     
