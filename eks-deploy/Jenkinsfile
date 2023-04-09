@@ -13,8 +13,16 @@ pipeline {
           def workingDir = "${workspace}/eks-deploy"
           dir(workingDir) {
             sh 'terraform init'
-            sh 'terraform state rm "aws_s3_bucket.sysmon_tfstate_bucket"'
-            sh 'terraform import "aws_s3_bucket.sysmon_tfstate_bucket" "sysmon-app-bucket"'
+            sh '''
+      #!/bin/bash
+
+      if terraform state list | grep -q "aws_s3_bucket.sysmon_tfstate_bucket"; then
+        echo "sysmon-app-bucket resource exists."
+      else
+        echo "sysmon-app bucket resource does not exist, Will import it now"
+        terraform import "aws_s3_bucket.sysmon_tfstate_bucket" "sysmon-app-bucket"
+      fi
+    '''
             sh 'terraform apply -auto-approve'
           }
         }
