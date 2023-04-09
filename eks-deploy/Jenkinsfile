@@ -21,8 +21,10 @@ pipeline {
         stage('Deploy to EKS') {
       steps {
         script {
-          def kubernetesDir = "${workspace}/../kubernetes"
+          def kubernetesDir = "${workspace}/kubernetes"
+          echo "kubernetesDir: ${kubernetesDir}"
           dir(kubernetesDir) {
+            sh 'ls -la ./**'
             sh 'aws eks update-kubeconfig --name sysmon-eks-cluster'
             sh 'kubectl apply -f deployment.yaml'
             sh 'kubectl apply -f service.yaml'
