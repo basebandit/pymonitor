@@ -13,6 +13,7 @@ pipeline {
           def workingDir = "${workspace}/eks-deploy"
           dir(workingDir) {
             sh 'terraform init'
+            sh 'terraform state rm "aws_s3_bucket.sysmon_tfstate_bucket"'
             sh 'terraform import "aws_s3_bucket.sysmon_tfstate_bucket" "sysmon-app-bucket"'
             sh 'terraform apply -auto-approve'
           }
@@ -23,9 +24,7 @@ pipeline {
       steps {
         script {
           def kubernetesDir = "${workspace}/kubernetes"
-          echo "kubernetesDir: ${kubernetesDir}"
           dir(kubernetesDir) {
-            sh 'ls -la ./**'
             sh 'aws eks update-kubeconfig --name sysmon-eks-cluster'
             sh 'kubectl apply -f deployment.yaml'
             sh 'kubectl apply -f service.yaml'
