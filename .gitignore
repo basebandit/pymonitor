@@ -1,5 +1,22 @@
-venv/
+# ides
 .vscode/
+.idea/
+
+# python
+venv/
+.pytest_cache/
+__pycache__/
 *.pyc
 *.pyo
-.pycache/
+
+# terraform
+.terraform
+*.pem
+*.tfvars
+*.tfplan
+*.tfstate
+*.tfstate.backup
+*.lock.info
+.terraform
+.DS_Store
+

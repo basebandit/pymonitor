@@ -1,2 +1,26 @@
+# ides
 .vscode/
-.venv/
+.idea/
+.github/
+
+kubernetes/
+jenkins-server/
+
+# python
+venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+
+# terraform
+.terraform
+*.pem
+*.tfvars
+*.tfplan
+*.tfdestroy
+*.tfstate
+*.tfstate.backup
+*.lock.info
+.terraform
+.DS_Store
