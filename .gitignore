@@ -16,6 +16,8 @@ __pycache__/
 *.tfplan
 *.tfstate
 *.tfstate.backup
+*.tfdestroy
+*.lock.hcl
 *.lock.info
 .terraform
 .DS_Store
