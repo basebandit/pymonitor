@@ -13,6 +13,7 @@ pipeline {
           def workingDir = "${workspace}/eks-deploy"
           dir(workingDir) {
             sh 'terraform init'
+            sh 'terraform import "aws_s3_bucket.sysmon_tfstate_bucket" "sysmon-app-bucket"'
             sh 'terraform apply -auto-approve'
           }
         }
