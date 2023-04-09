@@ -17,7 +17,6 @@ def client(app):
 
 def test_index(client):
     response = client.get("/")
-    print(f"response {response.data}")
     assert b"System Monitor" in response.data
     assert b"CPU Utilization" in response.data
     assert b"Memory Utilization" in response.data
