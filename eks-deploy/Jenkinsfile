@@ -10,8 +10,11 @@ pipeline {
         stage('Create an EKS cluster') {
       steps {
         script {
+          def workingDir = "${workspace}/eks-deploy"
+          dir(workingDir) {
             sh 'terraform init'
             sh 'terraform apply -auto-approve'
+          }
         }
       }
         }
