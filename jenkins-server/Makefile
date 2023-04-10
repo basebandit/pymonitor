@@ -3,7 +3,7 @@ REGION=us-east-1
 BUCKET=sysmon-app-bucket
 
 create-bucket:
-	aws s3api create-bucket --bucket $(BUCKET)
+	aws s3api create-bucket --bucket $(BUCKET) --no-cli-pager
 
 init: create-bucket
 	terraform init
@@ -16,11 +16,11 @@ apply:
 	terraform apply sysmon.tfplan
 
 delete-bucket:
-	aws s3api delete-objects --bucket ${BUCKET} --delete "$$(aws s3api list-object-versions --bucket "${BUCKET}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
-	aws s3 rb s3://${BUCKET}
+	aws s3api delete-objects --bucket ${BUCKET} --delete "$$(aws s3api list-object-versions --bucket "${BUCKET}" --no-cli-pager --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+	aws s3 rb s3://${BUCKET} --no-cli-pager
 
 destroy:
-	terraform state rm 'aws_s3_bucket.sysmon_tfstate_bucket'
+  terraform state rm 'aws_s3_bucket.sysmon_tfstate_bucket'
 	terraform plan -destroy -out=sysmon.tfdestroy
 	terraform apply sysmon.tfdestroy
 
